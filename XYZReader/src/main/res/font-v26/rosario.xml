@@ -3,8 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <font
         android:font="@font/rosario_regular"
+        android:fontWeight="400"
         android:fontStyle="normal"
 
         app:font="@font/rosario_regular"
+        app:fontWeight="400"
         app:fontStyle="normal" />
 </font-family>
