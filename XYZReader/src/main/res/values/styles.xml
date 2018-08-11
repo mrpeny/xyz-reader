@@ -30,6 +30,18 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <!-- General styles -->
+    <style name="AppbarLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    </style>
 
+    <!-- MainActivity styles -->
+    <style name="ToolbarStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
 
 </resources>
