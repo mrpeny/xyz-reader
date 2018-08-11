@@ -19,6 +19,11 @@
 
     <style name="Theme.Bacon" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="fontFamily">@font/rosario</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <item name="android:textColorPrimary">@color/color_primary_text</item>
+        <item name="android:textColorSecondary">@color/color_secondary_text</item>
     </style>
 
     <style name="Theme.Bacon.Detail">
