@@ -26,10 +26,6 @@
         <item name="android:textColorSecondary">@color/color_secondary_text</item>
     </style>
 
-    <style name="Theme.Bacon.Detail">
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
-
     <!-- General styles -->
     <style name="AppbarLayout">
         <item name="android:layout_width">match_parent</item>
@@ -75,5 +71,104 @@
         <item name="android:ellipsize">end</item>
     </style>
 
+    <!-- Detail Activity styles -->
+    <style name="BackdropImageArticleDetail">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="FabStyleArticleDetail">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="borderWidth">0dp</item>
+        <item name="elevation">6dp</item>
+        <item name="pressedTranslationZ">12dp</item>
+        <item name="rippleColor">@android:color/white</item>
+    </style>
+
+    <style name="ContainerLinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="PhotoContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/zero_layout_height</item>
+        <item name="android:background">@color/photo_placeholder</item>
+        <item name="android:layout_weight">@integer/weight_value_one</item>
+    </style>
+
+    <style name="FragmentImage">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="FragmentImageBackground">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/view_height</item>
+        <item name="android:background">@drawable/photo_background_protection</item>
+    </style>
+
+    <style name="MetaBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingLeft">@dimen/detail_inner_horiz_margin</item>
+        <item name="android:paddingRight">@dimen/detail_inner_horiz_margin</item>
+        <item name="android:paddingTop">@dimen/detail_metabar_vert_padding</item>
+        <item name="android:paddingBottom">@dimen/detail_metabar_vert_padding</item>
+    </style>
+
+    <style name="FragmentArticleTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Large</item>
+        <item name="android:paddingBottom">@dimen/detail_metabar_title_bottom_padding</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineSpacingMultiplier">@dimen/title_lineSpacingMultiplier</item>
+    </style>
+
+    <style name="FragmentArticleSubtitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Small</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="ScrollView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="ArticleBodyContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:maxWidth">@dimen/detail_card_max_width</item>
+    </style>
+
+    <style name="ArticleBody">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+        <item name="android:layout_marginLeft">@dimen/detail_inner_horiz_margin</item>
+        <item name="android:layout_marginRight">@dimen/detail_inner_horiz_margin</item>
+        <item name="android:paddingBottom">@dimen/detail_body_bottom_margin</item>
+        <item name="android:textColor">@color/color_primary_text</item>
+        <item name="android:textColorLink">@color/color_accent</item>
+        <item name="android:lineSpacingMultiplier">@fraction/detail_body_line_spacing_multiplier
+        </item>
+        <item name="android:paddingTop">@dimen/detail_body_top_margin</item>
+    </style>
 
 </resources>

@@ -13,5 +13,12 @@
     <dimen name="article_list_card_title_padding_top">16dp</dimen>
     <dimen name="article_list_card_author_padding_bottom">16dp</dimen>
     <dimen name="article_list_card_title_padding_bottom">4dp</dimen>
+    <dimen name="height_collapsing_toolbar">300dp</dimen>
+
+    <dimen name="zero_layout_height">0dp</dimen>
+    <dimen name="view_height">144dp</dimen>
+    <item name="title_lineSpacingMultiplier" format="float" type="dimen">0.9</item>
+    <dimen name="maxwidth_linearlayout_elevation">2dp</dimen>
+
 
 </resources>
