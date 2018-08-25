@@ -78,7 +78,6 @@
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         style="@style/FabStyleArticleDetail"
-        android:onClick="onFabClick"
         app:layout_anchor="@id/abl_main_article_detail"
         app:layout_anchorGravity="bottom|right|end"
         app:srcCompat="@drawable/ic_share_vector" />

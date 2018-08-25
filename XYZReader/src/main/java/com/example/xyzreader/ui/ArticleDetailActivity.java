@@ -41,11 +41,7 @@ public class ArticleDetailActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        }
+
         setContentView(R.layout.activity_article_detail);
 
         getLoaderManager().initLoader(0, null, this);
@@ -137,13 +133,6 @@ public class ArticleDetailActivity extends AppCompatActivity
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mCursor = null;
         mPagerAdapter.notifyDataSetChanged();
-    }
-
-    public void onUpButtonFloorChanged(long itemId, ArticleDetailFragment fragment) {
-        if (itemId == mSelectedItemId) {
-            mSelectedItemUpButtonFloor = fragment.getUpButtonFloor();
-            updateUpButtonPosition();
-        }
     }
 
     private void updateUpButtonPosition() {

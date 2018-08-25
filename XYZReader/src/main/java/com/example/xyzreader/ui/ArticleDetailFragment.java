@@ -7,11 +7,14 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ShareCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
@@ -39,7 +42,7 @@ import java.util.GregorianCalendar;
  */
 public class ArticleDetailFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
-    private static final String TAG = "ArticleDetailFragment";
+    private static final String TAG = ArticleDetailFragment.class.getSimpleName();
 
     public static final String ARG_ITEM_ID = "item_id";
     private static final float PARALLAX_FACTOR = 1.25f;
@@ -48,8 +51,7 @@ public class ArticleDetailFragment extends Fragment implements
     private long mItemId;
     private View mRootView;
     private int mMutedColor = 0xFF333333;
-    private ObservableScrollView mScrollView;
-    private DrawInsetsFrameLayout mDrawInsetsFrameLayout;
+    private NestedScrollView mScrollView;
     private ColorDrawable mStatusBarColorDrawable;
 
     private int mTopInset;
@@ -58,12 +60,15 @@ public class ArticleDetailFragment extends Fragment implements
     private int mScrollY;
     private boolean mIsCard = false;
     private int mStatusBarFullOpacityBottom;
+    private AppBarLayout mAppBar;
+    private CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
     // Use default locale format
     private SimpleDateFormat outputFormat = new SimpleDateFormat();
     // Most time functions can only handle 1902 - 2037
     private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2,1,1);
+    private Toolbar mToolbar;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -87,6 +92,7 @@ public class ArticleDetailFragment extends Fragment implements
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             mItemId = getArguments().getLong(ARG_ITEM_ID);
         }
+
 
         mIsCard = getResources().getBoolean(R.bool.detail_is_card);
         mStatusBarFullOpacityBottom = getResources().getDimensionPixelSize(
@@ -112,33 +118,41 @@ public class ArticleDetailFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
-        mDrawInsetsFrameLayout = (DrawInsetsFrameLayout)
-                mRootView.findViewById(R.id.draw_insets_frame_layout);
-        mDrawInsetsFrameLayout.setOnInsetsCallback(new DrawInsetsFrameLayout.OnInsetsCallback() {
-            @Override
-            public void onInsetsChanged(Rect insets) {
-                mTopInset = insets.top;
-            }
-        });
+        mRootView = inflater.inflate(R.layout.fragment_article_detail_right, container, false);
 
-        mScrollView = (ObservableScrollView) mRootView.findViewById(R.id.scrollview);
-        mScrollView.setCallbacks(new ObservableScrollView.Callbacks() {
-            @Override
-            public void onScrollChanged() {
-                mScrollY = mScrollView.getScrollY();
-                getActivityCast().onUpButtonFloorChanged(mItemId, ArticleDetailFragment.this);
-                mPhotoContainerView.setTranslationY((int) (mScrollY - mScrollY / PARALLAX_FACTOR));
-                updateStatusBar();
-            }
-        });
+        mScrollView = mRootView.findViewById(R.id.scrollview);
 
-        mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
+        mPhotoView = mRootView.findViewById(R.id.photo);
         mPhotoContainerView = mRootView.findViewById(R.id.photo_container);
+        mAppBar = (AppBarLayout) mRootView.findViewById(R.id.abl_main_article_detail);
+        mCollapsingToolbarLayout = (CollapsingToolbarLayout) mRootView.findViewById(R.id.ctl_main_article_detail);
+        mCollapsingToolbarLayout.setTitleEnabled(false);
+
+        mToolbar = (Toolbar) mRootView.findViewById(R.id.toolbar_article_detail);
+        getActivityCast().setSupportActionBar(mToolbar);
+        getActivityCast().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+
+        mAppBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                final boolean collapsed =
+                        (0 == Math.abs(verticalOffset) - appBarLayout.getTotalScrollRange());
+                final boolean titleEnabled = collapsed && null != mCursor;
+                final String title =
+                        titleEnabled ? mCursor.getString(ArticleLoader.Query.TITLE) : "";
+                mToolbar.setTitle(title);
+            }
+        });
 
         mStatusBarColorDrawable = new ColorDrawable(0);
 
-        mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
+        mRootView.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
@@ -165,7 +179,6 @@ public class ArticleDetailFragment extends Fragment implements
                     (int) (Color.blue(mMutedColor) * 0.9));
         }
         mStatusBarColorDrawable.setColor(color);
-        mDrawInsetsFrameLayout.setInsetBackground(mStatusBarColorDrawable);
     }
 
     static float progress(float v, float min, float max) {
@@ -208,7 +221,9 @@ public class ArticleDetailFragment extends Fragment implements
             mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
-            titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
+            String title = mCursor.getString(ArticleLoader.Query.TITLE);
+            titleView.setText(title);
+            mToolbar.setTitle(title);
             Date publishedDate = parsePublishedDate();
             if (!publishedDate.before(START_OF_EPOCH.getTime())) {
                 bylineView.setText(Html.fromHtml(
