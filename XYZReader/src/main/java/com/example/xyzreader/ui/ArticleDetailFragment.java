@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -51,6 +52,9 @@ public class ArticleDetailFragment extends Fragment implements
     private ImageView mPhotoView;
     private AppBarLayout mAppBar;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
+    private TextView mBodyTextView;
+    private TextView mEmptyView;
+    private ProgressBar mProgressBar;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
     // Use default locale format
@@ -83,6 +87,7 @@ public class ArticleDetailFragment extends Fragment implements
         }
 
         setHasOptionsMenu(true);
+
     }
 
     public ArticleDetailActivity getActivityCast() {
@@ -110,6 +115,9 @@ public class ArticleDetailFragment extends Fragment implements
         mAppBar = mRootView.findViewById(R.id.abl_main_article_detail);
         mCollapsingToolbarLayout = mRootView.findViewById(R.id.ctl_main_article_detail);
         mCollapsingToolbarLayout.setTitleEnabled(false);
+        mBodyTextView = mRootView.findViewById(R.id.article_body);
+        mEmptyView = mRootView.findViewById(R.id.empty_view);
+        mProgressBar = mRootView.findViewById(R.id.pb_article_detail);
 
         mToolbar = mRootView.findViewById(R.id.toolbar_article_detail);
         getActivityCast().setSupportActionBar(mToolbar);
@@ -171,8 +179,10 @@ public class ArticleDetailFragment extends Fragment implements
 
 
         if (mCursor != null) {
-            mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
+            mBodyTextView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.GONE);
+            mRootView.setAlpha(0);
             mRootView.animate().alpha(1);
             String title = mCursor.getString(ArticleLoader.Query.TITLE);
             titleView.setText(title);
@@ -219,20 +229,20 @@ public class ArticleDetailFragment extends Fragment implements
                         }
                     });
         } else {
-            mRootView.setVisibility(View.GONE);
-            titleView.setText("N/A");
-            bylineView.setText("N/A" );
-            bodyView.setText("N/A");
+            mBodyTextView.setVisibility(View.GONE);
+            mEmptyView.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        mProgressBar.setVisibility(View.VISIBLE);
         return ArticleLoader.newInstanceForItemId(getActivity(), mItemId);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        mProgressBar.setVisibility(View.GONE);
         if (!isAdded()) {
             if (cursor != null) {
                 cursor.close();
@@ -246,6 +256,7 @@ public class ArticleDetailFragment extends Fragment implements
             mCursor.close();
             mCursor = null;
         }
+
 
         bindViews();
     }

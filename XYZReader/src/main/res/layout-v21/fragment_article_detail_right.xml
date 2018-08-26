@@ -70,6 +70,12 @@
                 android:id="@+id/article_body"
                 style="@style/ArticleBody" />
 
+            <TextView
+                android:id="@+id/empty_view"
+                style="@style/ArticleBody.EmptyView"
+                android:text="@string/empty_view_error_message"
+                android:visibility="gone" />
+
         </com.example.xyzreader.ui.MaxWidthLinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
@@ -80,5 +86,9 @@
         app:layout_anchor="@id/abl_main_article_detail"
         app:layout_anchorGravity="bottom|right|end"
         app:srcCompat="@drawable/ic_share_vector" />
+
+    <ProgressBar
+        android:id="@+id/pb_article_detail"
+        style="@style/ProgressBarStyle" />
 
 </android.support.design.widget.CoordinatorLayout>

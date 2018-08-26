@@ -172,6 +172,11 @@
         <item name="android:paddingTop">@dimen/detail_body_top_margin</item>
     </style>
 
+    <style name="ArticleBody.EmptyView">
+        <item name="android:padding">40dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="SwipeRefreshStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -182,6 +187,12 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="elevation">@dimen/toolbar_elevation</item>
+    </style>
+
+    <style name="ProgressBarStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
 </resources>
