@@ -77,6 +77,7 @@ public class ArticleDetailActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 onSupportNavigateUp();
+                overridePendingTransition(R.anim.back_in, R.anim.back_out);
             }
         });
 
@@ -146,7 +147,6 @@ public class ArticleDetailActivity extends AppCompatActivity
             super.setPrimaryItem(container, position, object);
             ArticleDetailFragment fragment = (ArticleDetailFragment) object;
             if (fragment != null) {
-                mSelectedItemUpButtonFloor = fragment.getUpButtonFloor();
                 updateUpButtonPosition();
             }
         }
@@ -162,4 +162,11 @@ public class ArticleDetailActivity extends AppCompatActivity
             return (mCursor != null) ? mCursor.getCount() : 0;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.back_in, R.anim.back_out);
+    }
+
 }

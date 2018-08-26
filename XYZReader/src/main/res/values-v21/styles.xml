@@ -11,7 +11,4 @@
         <item name="android:elevation">@dimen/maxwidth_linearlayout_elevation</item>
     </style>
 
-    <style name="Theme.Bacon.Detail">
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
 </resources>

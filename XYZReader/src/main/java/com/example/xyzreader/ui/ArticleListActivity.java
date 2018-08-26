@@ -147,6 +147,8 @@ public class ArticleListActivity extends AppCompatActivity implements
                 public void onClick(View view) {
                     startActivity(new Intent(Intent.ACTION_VIEW,
                             ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))));
+
+                    overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
                 }
             });
             return vh;
